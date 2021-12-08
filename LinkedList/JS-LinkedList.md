@@ -1,0 +1,75 @@
+## JavaScript数据结构之链表
+要存储多个元素，数组（或列表）可能是最常用的数据结构。这种数据结构非常方便，JS提供了一个便利的[]语法来访问其元素。然而，这种数据结构有一个缺点：（在大多数语言中）数组的大小是固定的，从数组的起点或中间插入或移除项的成本很高，因为需要移动元素。（尽管JavaScript有来自Array类的方法可以帮我们做这些事，但背后的情况同样如此。）
+链表存储有序的元素集合，但不同于数组，链表中的元素在内存中并不是连续放置的。每个元素由一个存储元素本身的节点和一个指向下一个元素的引用（也称指针或链接）组成。下图展示了一个链表的结构。
+
+<div align="center"><img src="./1.png" width="80%"></div>
+
+相对于传统的数组，链表的一个好处在于，添加或移除元素的时候不需要移动其他元素。然而，链表需要使用指针，因此实现链表时需要额外注意。在数组中，我们可以直接访问任何位置的任何元素，而要想访问链表中间的一个元素，则需要从起点（表头）开始迭代链表直到找到所需的元素。
+
+**在Javascript中并不提供链表数据类型，所以我们需要自己根据链表的特性，自行构建。**
+
+---
+
+### 创建链表
+
+```js
+// 链表中每个节点的构造函数
+function Node(element) {
+  this.element = element // 储存节点中的数据
+  this.next = null // next指针
+}
+// 链表构造函数
+function LinkedList() {
+  this.head = null // 头部指针
+  this.length = 0 // 链表长度
+}
+```
+
+**以上仅仅完成了链表结构的一部分，光靠这些是不能使用的，我们需要为链表结构创建一些方法，完善该数据结构**
+
+**常用的链表方法如下：**
+* push(element)：向链表尾部添加一个新元素。
+* insert(element, position)：向链表的特定位置插入一个新元素。
+* getElementAt(index)：返回链表中特定位置的元素。如果链表中不存在这样的元素，则返回undefined。
+* remove(element)：从链表中移除一个元素。
+* indexOf(element)：返回元素在链表中的索引。如果链表中没有该元素则返回-1。
+* removeAt(position)：从链表的特定位置移除一个元素。
+* isEmpty()：如果链表中不包含任何元素，返回true，如果链表长度大于0则返回false。
+* size()：返回链表包含的元素个数，与数组的length属性类似。
+* toString()：返回表示整个链表的字符串。由于列表项使用了Node类，就需要重写继承自JavaScript对象默认的toString方法，让其只输出元素的值。
+
+**下面我们来一一实现这些方法**
+
+##### LinkedList.push()
+```javascript
+LinkedList.prototype.push = function(element) {
+  let node = new Node(element) // 传入element，建立待插入node
+  if(this.head === null) { // 当链表为空时
+    this.head = node // 直接将node插入，修改当前 head 指向新建立的 node 元素
+  } else { // 当链表不为空
+    let current = this.head // 新建指针，指向头部
+    while( current.next !== null ) { // 遍历当前链表，找到最后当前链表最后一个元素
+      current = current.next
+    }
+    current.next = node // 将当前链表最后一个元素 next 指针指向新建立的 node 元素
+  }
+  this.length++ // 递增链表长度
+}
+```
+> 通过下图可以直观的理解以上代码
+
+**situation 1（当前链表为空时）**
+
+向空列表添加一个元素。当我们创建一个LinkedList对象时，head会指向null
+
+<div align="center"><img src="./2.png" width="60%"></div>
+
+如果head元素为null，就意味着在向链表添加第一个元素。因此要做的就是让head元素指向node元素。下一个node元素会自动成为null。
+
+**situation 2（当前链表不为空时）**
+
+要向链表的尾部添加一个元素，首先需要找到最后一个元素。记住，我们只有第一个元素的引用，因此需要循环访问列表，直到找到最后一项。为此，我们需要一个指向链表中current项的变量。在循环访问链表的过程中，当current.next元素为null时，我们就知道已经到达链表尾部了。然后要做的就是让当前（也就是最后一个）元素的next指针指向想要添加到链表的节点。
+
+<div align="center"><img src="./3.png" width="60%"></div>
+
+**最后，递增链表的长度，这样就能控制它并且轻松得到链表的长度。**

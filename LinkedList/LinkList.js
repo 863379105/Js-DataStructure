@@ -68,11 +68,6 @@ LinkList.prototype.insert = function(element, position) {
     if(position === 0) {
       this.head = node
       node.next = current
-    }else if(position === this.length) {
-      while(current.next !== null) {
-        current = current.next
-      }
-      current.next = node
     }else {
       let previous
       for(let i = 0; i < position; i++) {
@@ -118,4 +113,3 @@ LinkList.prototype.toString = function() {
     return objString
   }
 }
-

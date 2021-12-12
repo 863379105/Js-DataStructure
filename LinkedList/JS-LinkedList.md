@@ -76,7 +76,7 @@ LinkedList.prototype.push = function(element) {
 
 #### LinkedList.removeAt(position)
 ```javascript
-LinkedList.removeAt = function(position) {
+LinkedList.prototype.removeAt = function(position) {
   if(position >= 0 && position < this.length) { // 判断position是否越界
     let current = this.head
     if(position === 0) { // 当删除第一个节点时，改变头指针，指向下一个节点
@@ -107,3 +107,55 @@ LinkedList.removeAt = function(position) {
 <div align="center"><img src="./6.png" width="60%"></img><p>删除中间元素</p></div>
 
 **最后，递减链表的长度。**
+
+#### LinkedList.insert(element,position)
+```js
+LinkedList.prototype.insert = function(element,position) {
+  let node = new Node(element) // 创建新节点
+  if(position >=0 && position <= this.length) { // 判断越界
+    let current = this.head // 创建current指针，指向头节点
+    if(position === 0) { // 当在起点添加元素
+      this.head = node // 改变头指针
+      node.next = current // 插入新元素
+    } else { // 在中间或尾部插入元素
+      let previous // 保存待插入位置的前一个元素
+      for(let i = 0; i < position; i++) {
+        previous = current 
+        current = current.next
+      }
+      previous.next = node // 指向新元素
+      node.next = current // 链接 current
+    }
+    this.length++ // 递增链表长度
+    return ture
+  }
+  return false
+}
+```
+> 通过下图可以直观的理解以上代码
+
+**situation 1（在链表的起点添加一个元素）**
+current变量是对链表中第一个元素的引用，我们需要做的是把node.next的值设为current。现在head和node.next都指向了current。接下来要做的就是把head的引用改为node，这样链表中就有了一个新元素。
+<div align="center"><img src="./7.png" width="60%"></img></div>
+
+**situation 2（在链表中间或尾部添加一个元素）**
+首先，我们需要迭代链表，找到目标位置。这个时候，我们会循环至index -1的位置，表示需要添加新节点位置的前一个位置。当跳出循环时，previous将是对想要插入新元素的位置之前一个元素的引用，current变量将是我们想要插入新元素的位置之后一个元素的引用。在这种情况下，我们要在previous和current之间添加新元素。因此，首先需要把新元素（node）和当前元素链接起来，然后需要改变previous和current之间的链接。我们还需要让previous.next指向node，取代current。
+<div align="center"><img src="./8.png" width="60%"></img></div>
+
+**最后，递增链表的长度。**
+
+#### LinkList.getElementAt(index)
+```js
+LinkList.prototype.getElementAt = function(index) {
+  if(index >= 0 && index < this.length) { // 判断是否越界
+    let current = this.head
+    if(index > 0) {
+      for(let i = 0; i < index; i++) {
+        current = current.next // 指向待查找元素
+      }
+    }
+    return current.data // 返回查找结果
+  }
+  return null
+}
+```

@@ -159,3 +159,59 @@ LinkList.prototype.getElementAt = function(index) {
   return null
 }
 ```
+
+#### LinkList.indexOf(element)
+```js
+LinkList.prototype.indexOf = function(element) {
+  let current = this.head
+  for(let i = 0; i < this.length; i++) {
+    if(current.data == element) {
+      return i
+    }
+    current = current.next
+  }
+  return -1
+}
+```
+
+#### LinkList.remove(element)
+```js
+LinkList.prototype.remove = function(element) {
+  let index = this.indexOf(element)
+  return this.removeAt(index)
+}
+```
+
+#### LinkList.size()
+```js
+LinkList.prototype.size = function() {
+  return this.length
+}
+```
+
+#### LinkList.isEmpty()
+```js
+LinkList.prototype.isEmpty = function() {
+  return this.length ? false : true
+}
+```
+
+#### LinkList.toString()
+```js
+LinkList.prototype.toString = function() {
+  if(!this.length) { // 链表为空时
+    return '' // 返回空字符串
+  } else {
+    let current = this.head
+    let objString = ''
+    while(current.next !== null) { // 遍历链表
+      objString = objString + current.data + ',' // 将每个元素转成字符串
+      current = current.next
+    }
+    objString = objString + current.data
+    return objString // 返回链表字符串
+  }
+}
+```
+
+### **以上就是我关于JS数据结构单链表的总结**

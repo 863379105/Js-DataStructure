@@ -73,3 +73,37 @@ LinkedList.prototype.push = function(element) {
 <div align="center"><img src="./3.png" width="60%"></div>
 
 **最后，递增链表的长度，这样就能控制它并且轻松得到链表的长度。**
+
+#### LinkedList.removeAt(position)
+```javascript
+LinkedList.removeAt = function(position) {
+  if(position >= 0 && position < this.length) { // 判断position是否越界
+    let current = this.head
+    if(position === 0) { // 当删除第一个节点时，改变头指针，指向下一个节点
+      this.head = current.next  
+    } else {
+      let previous 
+      for(let i = 0; i < position; i++) {
+        previous = current // 保存待删除节点上一个节点
+        current = current.next // 指向当前节点
+      }
+      previous.next = current.next // 删除节点
+    }
+    this.length-- // 递减链表长度
+    return current.data // 返回删除节点数据
+  }
+  return null // 越界返回null
+}
+```
+> 通过下图可以直观的理解以上代码
+
+**situation 1（当前删除第一个节点时）**
+如果想移除第一个元素，要做的就是让head指向列表的第二个元素。我们将用current变量创建一个对链表中第一个元素的引用。这样current变量就是对链表中第一个元素的引用。如果把head赋为current.next，就会移除第一个元素。
+<div align="center"><img src="./4.png" width="60%"></img></div>
+
+**situation 2（当前删除第一个节点时）**
+如果我们要移除链表的最后一个或者中间某个元素。为此，需要迭代链表的节点，直到到达目标位置。一个重要细节是：current变量总是为对所循环列表的当前元素的引用。我们还需要一个对当前元素的前一个元素的引用，它被命名为previous。在迭代到目标位置之后，current变量会持有我们想从链表中移除的节点。因此，要从链表中移除当前元素，要做的就是将previous.next和current.next链接起来。这样，当前节点就会被丢弃在计算机内存中，等着被垃圾回收器清除。
+<div align="center"><img src="./5.png" width="60%"></img><p>删除最后一个元素</p></div>
+<div align="center"><img src="./6.png" width="60%"></img><p>删除中间元素</p></div>
+
+**最后，递减链表的长度。**

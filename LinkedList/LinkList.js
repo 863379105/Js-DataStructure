@@ -39,7 +39,6 @@ LinkList.prototype.removeAt = function(position) {
       for(let i = 0; i < position; i++ ) {
         previous = current
         current = current.next
-        console.log(previous);
       }
       previous.next = current.next
     }

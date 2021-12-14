@@ -16,7 +16,7 @@ LinkList.prototype.isEmpty = function() {
 }
 // push(data)
 LinkList.prototype.push = function(data) {
-  let node = new Node(data)
+  let node = new Node(data) // 创建节点
   if(this.head === null) {
     this.head = node
   } else {

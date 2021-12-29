@@ -81,6 +81,22 @@ class BinaryTree {
       return false
     }
   }
+  // min
+  min() {
+    let curr = this.root
+    while(curr && curr.left) {
+      curr = curr.left
+    }
+    return curr
+  }
+  // max
+  max() {
+    let curr = this.root
+    while(curr && curr.right) {
+      curr = curr.right
+    }
+    return curr
+  }
 }
 
 const binaryTree = new BinaryTree()

@@ -166,3 +166,33 @@ postOrderTraverseNode(node,callback) {
   callback && callback(node.key)
 }
 ```
+
+### 搜索二叉树中的值
+
+#### search(key) 搜索一个特定的值
+
+算法实现如下
+
+```js
+// search
+search(key) {
+  return this.searchNode(this.root,key)
+}
+searchNode(node,key) {
+  if(node) {
+    if(node.key === key) {
+      return true
+    } else if(node.key > key) {
+      this.searchNode(node.left,key)
+    }else {
+      this.searchNode(node.right,key)
+    }
+  } else {
+    return false
+  }
+}
+```
+searchNode方法可以用来寻找一棵树或其任意子树中的一个特定的值。这也是为什么在 search 中调用它的时候传入树的根节点作为参数。
+在开始算法之前，要验证作为参数传入的node是否合法（不是null或undefined）。如果是的话，说明要找的键没有找到，返回false。
+如果传入的节点不是null，需要继续验证。如果要找的键比当前的节点小，那么继续在左侧的子树上搜索。如果要找的键比当前的节点大，那么就从右侧子节点开始继续搜索（行{6}），否则就说明要找的键和当前节点的键相等，返回true来表示找到了这个键。
+

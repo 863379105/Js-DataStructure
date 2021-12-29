@@ -97,12 +97,51 @@ class BinaryTree {
     }
     return curr
   }
+  // remove(key)
+  remove(key) {
+    this.root = this.removeNode(this.root,key)
+  }
+  removeNode(node,key) {
+    if(node) {
+      if(node.key === key) {
+        // situation 1
+        if(!node.left && !node.right) {
+          node = null
+          return node
+        }
+        // situation 2
+        if(!node.left) {
+          node = node.right
+          return node
+        } else if(!node.right) {
+          node = node.left
+          return node
+        }
+        // situation 3
+        let minNode = node.right
+        while(minNode.left) {
+          minNode = minNode.left
+        } // 找到 node 右子树最小节点
+        node.key = minNode.key
+        node.right = this.removeNode(node.right,minNode.key)
+        return node
+      }else if(node.key > key) {
+        node.left = this.removeNode(node.left,key)
+        return node
+      }else {
+        node.right = this.removeNode(node.right,key)
+        return node
+      }
+    } else {
+      return null
+    }
+  }
 }
 
 const binaryTree = new BinaryTree()
-// binaryTree.insert(11)
-// binaryTree.insert(7)
-// binaryTree.insert(15)
+binaryTree.insert(11)
+binaryTree.insert(7)
+binaryTree.insert(15)
 // binaryTree.insert(5)
 // binaryTree.insert(3)
 // binaryTree.insert(9)
@@ -123,3 +162,5 @@ const binaryTree = new BinaryTree()
 // })
 // console.log(result);
 // binaryTree.postOrderTraverse()
+console.log(binaryTree.remove(4));
+console.log(binaryTree);

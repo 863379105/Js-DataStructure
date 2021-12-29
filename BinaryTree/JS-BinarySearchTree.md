@@ -119,6 +119,7 @@ insertNode(node,key) {
 #### inOrderTraverse() 中序遍历
 中序遍历是一种以上行顺序访问BST所有节点的遍历方式，也就是以从最小到最大的顺序访问所有节点。中序遍历的一种应用就是对树进行排序操作。我们来看看它的实现。
 ```js
+// 中序遍历
 inOrderTraverse(callback) {
   this.inOrderTraverseNode(this.root,callback)
 }
@@ -135,3 +136,33 @@ inOrderTraverseNode(node,callback) {
 }
 ```
 要通过中序遍历的方法遍历一棵树，首先要检查以参数形式传入的节点是否为null（这就是停止递归继续执行的判断条件，即递归算法的基线条件）。然后，递归调用相同的函数来访问左侧子节点。接着对根节点进行一些操作（callback），然后再访问右侧子节点。
+
+#### preOrderTraverse() 先序遍历
+先序遍历是以优先于后代节点的顺序访问每个节点的。先序遍历和中序遍历的不同点是，先序遍历会先访问节点本身，然后再访问它的左侧子节点，最后是右侧子节点。
+```js
+// 先序遍历
+preOrderTraverse(callback) {
+  this.preOrderTraverseNode(this.node,callback)
+}
+preOrderTraverseNode(node,callback) {
+  if(node) {
+    callback && callback(node.key)
+    this.preOrderTraverseNode(node.left)
+    this.preOrderTraverseNode(node.right)
+  }
+}
+```
+
+#### preOrderTraverse() 先序遍历
+后序遍历是先访问节点的后代节点，再访问节点本身。后序遍历会先访问左侧子节点，然后是右侧子节点，最后是父节点本身。
+```js
+// 后序遍历
+postOrderTraverse(callback) {
+  this.postOrderTraverseNode(this.root,callback)
+}
+postOrderTraverseNode(node,callback) {
+  this.postOrderTraverseNode(node.left,callback)
+  this.postOrderTraverseNode(node.right,callback)
+  callback && callback(node.key)
+}
+```

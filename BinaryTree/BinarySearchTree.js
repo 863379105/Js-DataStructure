@@ -34,50 +34,42 @@ class BinaryTree {
     }
   }
   // 中序遍历树 LDR
-  inOrderTraverse(node) {
+  inOrderTraverse(callback) {
+    this.inOrderTraverseNode(this.root,callback)
+  }
+  inOrderTraverseNode(node,callback) {
     if(node) {
-      this.inOrderTraverse(node.left)
-      console.log(node.key);
-      this.inOrderTraverse(node.right)
-    }
-    if(node === undefined) {
-      this.inOrderTraverse(this.root.left)
-      console.log(this.root.key);
-      this.inOrderTraverse(this.root.right)
+      this.inOrderTraverseNode(node.left,callback)
+      callback && callback(node.key)
+      this.inOrderTraverseNode(node.right,callback)
     }
   }
   // 先序遍历
-  preOrderTraverse(node) {
+  preOrderTraverse(callback) {
+    this.preOrderTraverseNode(this.node,callback)
+  }
+  preOrderTraverseNode(node,callback) {
     if(node) {
-      console.log(node.key);
-      this.preOrderTraverse(node.left)
-      this.preOrderTraverse(node.right)
-    }
-    if(node === undefined) {
-      console.log(this.root.key);
-      this.preOrderTraverse(this.root.left)
-      this.preOrderTraverse(this.root.right)
+      callback && callback(node.key)
+      this.preOrderTraverseNode(node.left)
+      this.preOrderTraverseNode(node.right)
     }
   }
   // 后序遍历
-  postOrderTraverse(node) {
-    if(node) {
-      this.postOrderTraverse(node.left)
-      this.postOrderTraverse(node.right)
-      console.log(node.key);
-    }
-    if(node === undefined) {
-      this.postOrderTraverse(this.root.left)
-      this.postOrderTraverse(this.root.right)
-      console.log(this.root.key);
-    }
+  postOrderTraverse(callback) {
+    this.postOrderTraverseNode(this.root,callback)
+  }
+  postOrderTraverseNode(node,callback) {
+    this.postOrderTraverseNode(node.left,callback)
+    this.postOrderTraverseNode(node.right,callback)
+    callback && callback(node.key)
   }
 }
 
 const binaryTree = new BinaryTree()
-binaryTree.insert(11)
-binaryTree.insert(7)
-binaryTree.insert(15)
+// binaryTree.insert(11)
+// binaryTree.insert(7)
+// binaryTree.insert(15)
 // binaryTree.insert(5)
 // binaryTree.insert(3)
 // binaryTree.insert(9)
@@ -91,8 +83,10 @@ binaryTree.insert(15)
 // binaryTree.insert(25)
 // binaryTree.insert(6)
 // console.dir(binaryTree);
-binaryTree.preOrderTraverse()
-console.log('---------');
-binaryTree.inOrderTraverse()
-console.log('---------');
-binaryTree.postOrderTraverse()
+// binaryTree.preOrderTraverse()
+// result = []
+// binaryTree.inOrderTraverse((value) => {
+//   result.push(value)
+// })
+// console.log(result);
+// binaryTree.postOrderTraverse()

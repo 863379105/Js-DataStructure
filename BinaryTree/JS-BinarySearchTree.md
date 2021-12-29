@@ -43,7 +43,7 @@ class BinarySearchTree {
   }
 }
 ```
-然后，我们需要实现一些方法。下面是将要在BinarySearchTree类中实现的方法。
+然后，我们需要实现一些方法。下面是将要在BinarySearchTree类中实现的方法。  
 ``❑ insert(key)：向树中插入一个新的键。``  
 ``❑ search(key)：在树中查找一个键。如果节点存在，则返回true；如果不存在，则返回false。``  
 ``❑ inOrderTraverse()：通过中序遍历方式遍历所有节点。``  

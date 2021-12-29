@@ -44,14 +44,14 @@ class BinarySearchTree {
 }
 ```
 然后，我们需要实现一些方法。下面是将要在BinarySearchTree类中实现的方法。
-``❑ insert(key)：向树中插入一个新的键。``
-``❑ search(key)：在树中查找一个键。如果节点存在，则返回true；如果不存在，则返回false。``
-``❑ inOrderTraverse()：通过中序遍历方式遍历所有节点。``
-``❑ preOrderTraverse()：通过先序遍历方式遍历所有节点。``
-``❑ postOrderTraverse()：通过后序遍历方式遍历所有节点。``
-``❑ min()：返回树中最小的值/键。``
-``❑ max()：返回树中最大的值/键。``
-``❑ remove(key)：从树中移除某个键。``
+``❑ insert(key)：向树中插入一个新的键。``  
+``❑ search(key)：在树中查找一个键。如果节点存在，则返回true；如果不存在，则返回false。``  
+``❑ inOrderTraverse()：通过中序遍历方式遍历所有节点。``  
+``❑ preOrderTraverse()：通过先序遍历方式遍历所有节点。``  
+``❑ postOrderTraverse()：通过后序遍历方式遍历所有节点。``  
+``❑ min()：返回树中最小的值/键。``  
+``❑ max()：返回树中最大的值/键。``  
+``❑ remove(key)：从树中移除某个键。``  
 
 #### insert(key)
 要向树中插入一个新的节点（或键），要经历三个步骤。

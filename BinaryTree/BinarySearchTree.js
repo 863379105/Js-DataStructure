@@ -64,6 +64,23 @@ class BinaryTree {
     this.postOrderTraverseNode(node.right,callback)
     callback && callback(node.key)
   }
+  // search
+  search(key) {
+    return this.searchNode(this.root,key)
+  }
+  searchNode(node,key) {
+    if(node) {
+      if(node.key === key) {
+        return true
+      } else if(node.key > key) {
+        this.searchNode(node.left,key)
+      }else {
+        this.searchNode(node.right,key)
+      }
+    } else {
+      return false
+    }
+  }
 }
 
 const binaryTree = new BinaryTree()

@@ -33,6 +33,10 @@ class Graph{
     return this.adjList
   }
   // toString 返回图
+  // A -> B C D
+  // B -> A C
+  // C -> A B
+  // D -> A
   toString() {
     let s = ''
     for(let i = 0; i < this.vertices.length; i++) {

@@ -11,12 +11,11 @@ Queue.prototype.dequeue = function() {
   if(this.isEmpty()) return undefined
   let ele = this.items[this.lowestCount]
   delete this.items[this.lowestCount]
-  this.length--
   this.lowestCount++
   return ele
 }
 Queue.prototype.isEmpty = function() {
-  return this.length === 0
+  return this.length - this.lowestCount === 0
 }
 Queue.prototype.peek = function() {
   if(this.isEmpty()) return undefined

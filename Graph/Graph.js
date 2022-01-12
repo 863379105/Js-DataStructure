@@ -1,3 +1,6 @@
+
+const Queue = require('../Queue/Queue')
+
 class Graph{
   constructor(isDirected = false) {
     this.isDirected = isDirected // 是否有向
@@ -74,7 +77,6 @@ const breadthFirstSearch = (graph,startVertex,cb) => {
   queue.enqueue(startVertex) // 起始点入队
   while(!queue.isEmpty()) {
     let u = queue.dequeue() // 弹出队列首元素
-    
     let neighbors = adjList.get(u)
     for(let i = 0; i < neighbors.length; i++) { // 检查队列首元素相邻边
       if(colors[neighbors[i]] === Colors.WHITE) { // 如果未被访问 则入队
@@ -86,3 +88,76 @@ const breadthFirstSearch = (graph,startVertex,cb) => {
     cb && cb(u) // 执行回调
   }
 }
+
+const BFS = (graph,startVertex) => {
+  let vertices = graph.vertices
+  let adjList = graph.adjList
+  let colors = initializeColor(vertices)
+  let queue = new Queue()
+  const distances = {} // 距离起点的距离
+  const predecessors = {} // 保存前溯点
+
+  colors[startVertex] = Colors.GREY
+  queue.enqueue(startVertex)
+
+  vertices.map(v => { // init distances | predecessors
+    distances[v] = 0
+    predecessors[v] = null
+  })
+
+  while(!queue.isEmpty()) {
+    let u = queue.dequeue()
+    let neighbors = adjList.get(u)
+    neighbors.map(vertex => {
+      if(colors[vertex] === Colors.WHITE) {
+        colors[vertex] = Colors.GREY
+        distances[vertex] = distances[u] + 1
+        predecessors[vertex] = u
+        queue.enqueue(vertex)
+      }
+    })
+  }
+  return {
+    distances,
+    predecessors
+  }
+}
+
+// -------------
+const graph = new Graph()
+const vertices = ["A","B","C","D","E","F","G","H","I"]
+vertices.map(v => {
+  graph.addVertex(v)
+})
+graph.addEdge('A','B')
+graph.addEdge('A','C')
+graph.addEdge('A','D')
+graph.addEdge('C','D')
+graph.addEdge('C','G')
+graph.addEdge('D','G')
+graph.addEdge('D','H')
+graph.addEdge('B','E')
+graph.addEdge('B','F')
+graph.addEdge('E','I')
+// -------------------
+
+// breadthFirstSearch(graph,"A",(v) => {
+//   console.log(v);
+// })
+
+
+const shortestPath = (graph,v,w) => {
+  let result = BFS(graph,v)
+  let shortestDistance = result.distances[w]
+  let final = w
+  let path = `${final}`
+  for(let i = 0; i < shortestDistance; i++) {
+    final = result.predecessors[final]
+    path = `${final} -> ` + path
+  }
+  return path
+}
+
+vertices.map(v => {
+  console.log(shortestPath(graph,'A',v));
+})

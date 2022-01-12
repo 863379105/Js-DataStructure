@@ -30,3 +30,5 @@ Queue.prototype.clear = function() {
   this.lowestCount = 0
   this.length = 0
 }
+
+module.exports = Queue

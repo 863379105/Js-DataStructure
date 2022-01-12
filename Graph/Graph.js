@@ -62,9 +62,27 @@ const initializeColor = (vertices) => {
   vertices.map(vertex => {
     colors[vertex] = Colors.WHITE
   })
+  return colors
 }
 
 const breadthFirstSearch = (graph,startVertex,cb) => {
-  let vertices = graph.getVertices()
-  let adjList = graph.getAdjList()
+  let vertices = graph.getVertices() // 获取顶点列表
+  let adjList = graph.getAdjList() // 获取邻接表
+  const colors = initializeColor(vertices) // init vertices color
+  let queue = new Queue() // 创建队列
+  colors[startVertex] = Colors.GREY // 将起始点颜色修改成灰色
+  queue.enqueue(startVertex) // 起始点入队
+  while(!queue.isEmpty()) {
+    let u = queue.dequeue() // 弹出队列首元素
+    
+    let neighbors = adjList.get(u)
+    for(let i = 0; i < neighbors.length; i++) { // 检查队列首元素相邻边
+      if(colors[neighbors[i]] === Colors.WHITE) { // 如果未被访问 则入队
+        colors[neighbors[i]] = Colors.GREY
+        queue.enqueue(neighbors[i])
+      }
+    }
+    colors[u] = Colors.BLACK // 探索完毕，修改顶点为黑色
+    cb && cb(u) // 执行回调
+  }
 }

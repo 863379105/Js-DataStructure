@@ -123,6 +123,18 @@ const BFS = (graph,startVertex) => {
   }
 }
 
+const shortestPath = (graph,v,w) => {
+  let result = BFS(graph,v)
+  let shortestDistance = result.distances[w]
+  let final = w
+  let path = `${final}`
+  for(let i = 0; i < shortestDistance; i++) {
+    final = result.predecessors[final]
+    path = `${final} -> ` + path
+  }
+  return path
+}
+
 // -------------
 const graph = new Graph()
 const vertices = ["A","B","C","D","E","F","G","H","I"]
@@ -146,17 +158,7 @@ graph.addEdge('E','I')
 // })
 
 
-const shortestPath = (graph,v,w) => {
-  let result = BFS(graph,v)
-  let shortestDistance = result.distances[w]
-  let final = w
-  let path = `${final}`
-  for(let i = 0; i < shortestDistance; i++) {
-    final = result.predecessors[final]
-    path = `${final} -> ` + path
-  }
-  return path
-}
+
 
 vertices.map(v => {
   console.log(shortestPath(graph,'A',v));

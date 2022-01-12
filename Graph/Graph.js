@@ -49,3 +49,22 @@ class Graph{
     return s
   }
 }
+
+// 枚举颜色
+const Colors = {
+  WHITE: 0,
+  GREY: 1,
+  BLACK: 2
+}
+// 初始化顶点颜色
+const initializeColor = (vertices) => {
+  const colors = {}
+  vertices.map(vertex => {
+    colors[vertex] = Colors.WHITE
+  })
+}
+
+const breadthFirstSearch = (graph,startVertex,cb) => {
+  let vertices = graph.getVertices()
+  let adjList = graph.getAdjList()
+}

@@ -89,6 +89,19 @@ Class Graph{
 
 #### 广度优先遍历
 
+广度优先搜索算法会从指定的第一个顶点开始遍历图，先访问其所有的邻点（相邻顶点），就像一次访问图的一层。换句话说，就是先宽后深地访问顶点，如下图所示。
+
+![img](./4.png)
+
+以下是从顶点v开始的广度优先搜索算法所遵循的步骤。
+1. 创建一个队列Q。
+2. 标注v为被发现的（灰色），并将v入队列Q。
+3. 如果Q非空，则运行以下步骤：
+    * 将u从Q中出队列；
+    * 标注u为被发现的（灰色）；
+    * 将u所有未被访问过的邻点（白色）入队列；
+    * 标注u为已被探索的（黑色）。
+
 ```js
 // 模拟枚举颜色
 const Colors = {
@@ -124,9 +137,61 @@ const breadthFirstSearch = (graph,startVertex,cb) => {
             }
         })
         colors[u] = Colors.BLACK // 探索完毕，修改顶点为黑色
-        cb && cb(u) // 执行回调
+        cb && cb(u) // 执行回调，操作节点
     }
+}
+```
+以上是通过广度优先算法遍历节点，但是通过这个思想，我们可以处理很多问题，如：计算两点间的距离，计算两点间的最短路径，下面来实现一下。
 
+**通过BFS算法记录两点间距离**
+```js
+const BFS = (graph,startVertex) => {
+    const vertices = graph.vertices
+    const adjList = graph.adjList
+    const distances = {} // 保存每个节点与起始节点的最短距离
+    const predecessors = {} // 保存每个节点的溯节点
+    const queue = new Queue()
+
+    const colors = initializeColor(vertices) // 初始化顶点颜色，使用colors对象保存映射
+    vertices.map(v => { // init distances | predecessors
+        distances[v] = 0
+        predecessors[v] = null
+    })
+    colors[startVertex] = Colors.GREY // 标记起点颜色
+    queue.enqueue(startVertex)// 加入队列开始访问
+    while(!queue.isEmpty()) {
+        let u = queue.dequeue()
+        let neighbors = adjList.get(u)
+        nerghbors.map(v => {
+            if(colors[v] === Colors.WHITE) {
+                colors[vertex] = Colors.GREY
+                distances[vertex] = distances[u] + 1
+                predecessors[vertex] = u
+                queue.enqueue(vertex)
+            }
+        })
+        colors[u] = Colors.BLACK // 探索完毕，修改顶点为黑色
+    }
+    return {
+        distances,
+        predecessors
+    }
+}
+```
+在上述的方法中，我们可以通过``BFS``返回的 ``distances`` 和 ``predecessors`` 对象我们可以拿到每个顶点距起点的距离和前溯节点。
+
+通过这两个对象，我们还可以得出节点之间的具体最短路径，我们来实现一下。
+```js
+const getShortestPath = (graph,v,w) => {
+  let result = BFS(graph,v)
+  let shortestDistance = result.distances[w]
+  let final = w
+  let shortestPath = `${final}`
+  for(let i = 0; i < shortestDistance; i++) {
+    final = result.predecessors[final]
+    shortestPath = `${final} -> ` + shortestPath
+  }
+  return shortestPath
 }
 ```
 

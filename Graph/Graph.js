@@ -116,6 +116,7 @@ const BFS = (graph,startVertex) => {
         queue.enqueue(vertex)
       }
     })
+    colors[u] = Colors.BLACK // 探索完毕，修改顶点为黑色
   }
   return {
     distances,

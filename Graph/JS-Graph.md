@@ -77,5 +77,57 @@ Class Graph{
 
 ### 图的遍历
 
+和树数据结构类似，我们可以访问图的所有节点。有两种算法可以对图进行遍历：`广度优先搜索（breadth-first search, BFS）`和`深度优先搜索（depth-first search, DFS）`。图遍历可以用来寻找特定的顶点或寻找两个顶点之间的路径，检查图是否连通，检查图是否含有环，等等。
+
+在实现算法之前，让我们来更好地理解一下图遍历的思想。
+
+图遍历算法的思想是必须追踪每个第一次访问的节点，并且追踪有哪些节点还没有被完全探索。对于两种图遍历算法，都需要明确指出第一个被访问的顶点。
+
+完全探索一个顶点要求我们查看该顶点的每一条边。对于每一条边所连接的没有被访问过的顶点，将其标注为被发现的，并将其加进待访问顶点列表中。
+
+为了保证算法的效率，务必访问每个顶点至多两次。连通图中每条边和顶点都会被访问到。
+
 #### 广度优先遍历
+
+```js
+// 模拟枚举颜色
+const Colors = {
+    WHITE: 0,
+    GREY: 1,
+    BLACK: 2
+}
+// 初始化顶点颜色
+const initializeColor = (vertices) => {
+    let colors = {}
+    vertices.map(v => {
+        colors[v] = Colors.WHITE
+    })
+    return colors
+}
+const breadthFirstSearch = (graph,startVertex,cb) => {
+    const vertices = graph.vertices
+    const adjList = graph.adjList
+    
+    const colors = initializeColor(vertices) // 初始化顶点颜色，使用colors对象保存映射
+    const queue = new Queue()
+    
+    colors[startVertex] = Colors.GREY // 标记起点颜色
+    queue.enqueue(startVertex)// 加入队列开始访问
+
+    while(!enqueue.isEmpty()) {
+        let u = queue.dequeue() // 队列首节点出队，进行探索
+        let neighbors = adjList.get(u)
+        neighbors.map(v => { // 检查队列首元素相邻边
+            if(colors[v] === Colors.WHITE) { // 如果未被访问 则入队
+                colors[v] = Colors.GREY
+                queue.enqueue(v)
+            }
+        })
+        colors[u] = Colors.BLACK // 探索完毕，修改顶点为黑色
+        cb && cb(u) // 执行回调
+    }
+
+}
+```
+
 #### 深度优先遍历

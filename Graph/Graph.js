@@ -204,21 +204,21 @@ const DFSVisit = (vertex,colors,adjList,d,f,p,time) => {
 }
 
 // ------------- TEST Sample
-const graph = new Graph()
-const vertices = ["A","B","C","D","E","F","G","H","I","j"]
-vertices.map(v => {
-  graph.addVertex(v)
-})
-graph.addEdge('A','B')
-graph.addEdge('A','C')
-graph.addEdge('A','D')
-graph.addEdge('C','D')
-graph.addEdge('C','G')
-graph.addEdge('D','G')
-graph.addEdge('D','H')
-graph.addEdge('B','E')
-graph.addEdge('B','F')
-graph.addEdge('E','I')
+// const graph = new Graph()
+// const vertices = ["A","B","C","D","E","F","G","H","I","j"]
+// vertices.map(v => {
+//   graph.addVertex(v)
+// })
+// graph.addEdge('A','B')
+// graph.addEdge('A','C')
+// graph.addEdge('A','D')
+// graph.addEdge('C','D')
+// graph.addEdge('C','G')
+// graph.addEdge('D','G')
+// graph.addEdge('D','H')
+// graph.addEdge('B','E')
+// graph.addEdge('B','F')
+// graph.addEdge('E','I')
 // breadthFirstSearch(graph,"A",(v) => {
 //   console.log(v);
 // })
@@ -232,5 +232,33 @@ graph.addEdge('E','I')
 //   console.log(v+'->');
 // })
 
-console.log(DFS(graph))
+// console.log(DFS(graph))
 
+// const graph = new Graph(true)
+// const vertices = ["A","B","C","D","E","F"]
+// vertices.map(v => {
+//   graph.addVertex(v)
+// })
+// graph.addEdge('A','C')
+// graph.addEdge('A','D')
+// graph.addEdge('B','D')
+// graph.addEdge('B','E')
+// graph.addEdge('C','F')
+// graph.addEdge('F','E')
+
+// const result = DFS(graph)
+// const finishedTimes = result.finished
+// let s = ''
+// for(let i = 0; i < vertices.length; i++) {
+//   let maxTime = 0;
+//   let maxVertex = null
+//   for(let j = 0; j < Object.values(finishedTimes).length; j++) {
+//     if(Object.values(finishedTimes)[j] > maxTime) {
+//       maxTime = Object.values(finishedTimes)[j]
+//       maxVertex = Object.keys(finishedTimes)[j]
+//     }
+//   }
+//   s = s + ' -> ' + maxVertex
+//   delete finishedTimes[maxVertex]
+// }
+// console.log(s);

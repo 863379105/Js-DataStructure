@@ -283,6 +283,52 @@ const DFSVisit = (vertex,colors,adjList,d,f,p,time) => {
 }
 ```
 
-通过上诉 ``DFS`` 算法得到的信息，我们可以完成拓扑排序。
+通过上述 ``DFS`` 算法得到的信息，我们可以完成拓扑排序。
 
 **拓扑排序**
+
+给定下图，假定每个顶点都是一个我们需要去执行的任务。
+
+ ![img](./6.png)
+
+这是一个有向图，意味着任务的执行是有顺序的。例如，任务F不能在任务A之前执行。注意这个图没有环，意味着这是一个无环图。所以，我们可以说该图是一个有向无环图（DAG）。
+
+当我们需要编排一些任务或步骤的执行顺序时，这称为拓扑排序（topologicalsorting，英文亦写作topsort或是toposort）。在日常生活中，这个问题在不同情形下都会出现。例如，当我们开始学习一门计算机科学课程，在学习某些知识之前得按顺序完成一些知识储备（你不可以在上算法I课程前先上算法II课程）。
+
+拓扑排序只能应用于DAG。下面我们来实现一下拓扑排序。
+
+```js
+const graph = new Graph(true)
+const vertices = ["A","B","C","D","E","F"]
+vertices.map(v => {
+  graph.addVertex(v)
+})
+graph.addEdge('A','C')
+graph.addEdge('A','D')
+graph.addEdge('B','D')
+graph.addEdge('B','E')
+graph.addEdge('C','F')
+graph.addEdge('F','E')
+// ------------------- 创建有向图
+const result = DFS(graph)
+const finishedTimes = result.finished
+let s = ''
+// 根据结束的时间，从大到小找出完成顺序
+for(let i = 0; i < vertices.length; i++) {
+  let maxTime = 0;
+  let maxVertex = null
+  for(let j = 0; j < Object.values(finishedTimes).length; j++) {
+    if(Object.values(finishedTimes)[j] > maxTime) {
+      maxTime = Object.values(finishedTimes)[j]
+      maxVertex = Object.keys(finishedTimes)[j]
+    }
+  }
+  s = s + ' -> ' + maxVertex
+  delete finishedTimes[maxVertex]
+}
+console.log(s); //  B -> A -> D -> C -> F -> E
+```
+执行了上述代码，我们可以得到拓扑排序结果：
+```js  
+B -> A -> D -> C -> F -> E  (排序结果不唯一)
+ ```

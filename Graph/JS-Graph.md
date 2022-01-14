@@ -235,3 +235,50 @@ const depthFirstSearch = (graph,cb) => {
     })
 }
 ```
+
+以上是深度优先遍历算法的实现，在此基础上，我们可以解决很多问。
+
+对于给定的图G，我们希望深度优先搜索算法遍历图G的所有节点，构建“森林”（有根树的一个集合）以及一组源顶点（根），并输出两个数组：发现时间和完成探索时间，下面我们来实现一下。
+
+**通过图G，构建森林**
+
+```js
+const DFS = graph => {
+  const vertices = graph.getVertices()
+  const adjList = graph.getAdjList()
+  const colors = initializeColor(vertices)
+  const d = {}
+  const f = {}
+  const p = {}
+  const time = {count: 0}
+  vertices.map(v => {
+    f[v] = 0
+    d[v] = 0
+    p[v] = null
+  })
+  vertices.map(vertex => {
+    if(colors[vertex] === Colors.WHITE) {
+      DFSVisit(vertex,colors,adjList,d,f,p,time)
+    }
+  })
+  return {
+    discovery: d,
+    finished: f,
+    predecessors: p
+  }
+}
+
+const DFSVisit = (vertex,colors,adjList,d,f,p,time) => {
+    colors[vertex] = Colors.GREY
+    d[vertex] = ++time.count
+    let neighbors = adjList.get(vertex)
+    for(let i = 0; i < neighbors.length; i++) {
+      if(colors[neighbors[i]] === Colors.WHITE) {
+        p[neighbors[i]] = vertex
+        DFSVisit(neighbors[i],colors,adjList,d,f,p,time)
+      }
+    }
+    colors[vertex] = Colors.BLACK
+    f[vertex] = ++time.count
+}
+```

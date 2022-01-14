@@ -282,3 +282,7 @@ const DFSVisit = (vertex,colors,adjList,d,f,p,time) => {
     f[vertex] = ++time.count
 }
 ```
+
+通过上诉 ``DFS`` 算法得到的信息，我们可以完成拓扑排序。
+
+**拓扑排序**

@@ -142,20 +142,23 @@ const depthFirstSearch = (graph,cb) => {
   const colors = initializeColor(vertices)
   
   vertices.map(vertex => {
-    depthFirstSearchVisit(vertex,colors,adjList,cb)
+    if(colors[vertex] === Colors.WHITE) {
+      depthFirstSearchVisit(vertex,colors,adjList,cb)
+    }
+    
   })
 }
 
 const depthFirstSearchVisit = (vertex,colors,adjList,cb) => {
-  if(colors[vertex] === Colors.WHITE) {
-    colors[vertex] = Colors.GREY
-    cb && cb(vertex)
-    let neighbors = adjList.get(vertex)
-    neighbors.map(v => {
+  colors[vertex] = Colors.GREY
+  cb && cb(vertex)
+  let neighbors = adjList.get(vertex)
+  neighbors.map(v => {
+    if(colors[vertex] === Colors.WHITE) {
       depthFirstSearchVisit(v,colors,adjList,cb)
-    })
-    colors[vertex] = Colors.BLACK
-  }
+    }
+  })
+  colors[vertex] = Colors.BLACK
 }
 
 const DFS = graph => {

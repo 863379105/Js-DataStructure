@@ -118,8 +118,8 @@ const initializeColor = (vertices) => {
     return colors
 }
 const breadthFirstSearch = (graph,startVertex,cb) => {
-    const vertices = graph.vertices
-    const adjList = graph.adjList
+    const vertices = graph.getVertices()
+    const adjList = graph.getAdjList()
     
     const colors = initializeColor(vertices) // 初始化顶点颜色，使用colors对象保存映射
     const queue = new Queue()
@@ -146,8 +146,8 @@ const breadthFirstSearch = (graph,startVertex,cb) => {
 **通过BFS算法记录两点间距离**
 ```js
 const BFS = (graph,startVertex) => {
-    const vertices = graph.vertices
-    const adjList = graph.adjList
+    const vertices = graph.getVertices()
+    const adjList = graph.getAdjList()
     const distances = {} // 保存每个节点与起始节点的最短距离
     const predecessors = {} // 保存每个节点的溯节点
     const queue = new Queue()
@@ -226,8 +226,8 @@ const depthFirstSearchVisit = (vertex,colors,adjList,cb) => {
 }
 
 const depthFirstSearch = (graph,cb) => {
-    const vertices = graph.vertices
-    const adjList = graph.adjList
+    const vertices = graph.getVertices()
+    const adjList = graph.getAdjList()
     const colors = initializeColor(vertices)
 
     depthFirstSearchVisit(vertices[0],colors,adjList,cb)

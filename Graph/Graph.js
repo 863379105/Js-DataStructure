@@ -145,7 +145,6 @@ const depthFirstSearch = (graph,cb) => {
     if(colors[vertex] === Colors.WHITE) {
       depthFirstSearchVisit(vertex,colors,adjList,cb)
     }
-    
   })
 }
 

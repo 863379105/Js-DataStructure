@@ -136,22 +136,42 @@ const shortestPath = (graph,v,w) => {
   return path
 }
 
+const depthFirstSearchVisit = (vertex,colors,adjList,cb) => {
+  if(colors[vertex] === Colors.WHITE) {
+      colors[vertex] = Colors.GREY
+      cb && cb(vertex)
+      let neighbors = adjList.get(vertex)
+      neighbors.map(v => {
+          depthFirstSearchVisit(v,colors,adjList,cb)
+      })
+      colors[vertex] = Colors.BLACK
+  }
+}
+
+const depthFirstSearch = (graph,cb) => {
+  const vertices = graph.vertices
+  const adjList = graph.adjList
+  const colors = initializeColor(vertices)
+  
+  depthFirstSearchVisit(vertices[0],colors,adjList,cb)
+}
+
 // ------------- TEST Sample
-// const graph = new Graph()
-// const vertices = ["A","B","C","D","E","F","G","H","I"]
-// vertices.map(v => {
-//   graph.addVertex(v)
-// })
-// graph.addEdge('A','B')
-// graph.addEdge('A','C')
-// graph.addEdge('A','D')
-// graph.addEdge('C','D')
-// graph.addEdge('C','G')
-// graph.addEdge('D','G')
-// graph.addEdge('D','H')
-// graph.addEdge('B','E')
-// graph.addEdge('B','F')
-// graph.addEdge('E','I')
+const graph = new Graph()
+const vertices = ["A","B","C","D","E","F","G","H","I"]
+vertices.map(v => {
+  graph.addVertex(v)
+})
+graph.addEdge('A','B')
+graph.addEdge('A','C')
+graph.addEdge('A','D')
+graph.addEdge('C','D')
+graph.addEdge('C','G')
+graph.addEdge('D','G')
+graph.addEdge('D','H')
+graph.addEdge('B','E')
+graph.addEdge('B','F')
+graph.addEdge('E','I')
 // breadthFirstSearch(graph,"A",(v) => {
 //   console.log(v);
 // })
@@ -160,5 +180,9 @@ const shortestPath = (graph,v,w) => {
 //   console.log(shortestPath(graph,'A',v));
 // })
 // -------------------
+
+depthFirstSearch(graph,(v) => {
+  console.log(v+'->');
+})
 
 

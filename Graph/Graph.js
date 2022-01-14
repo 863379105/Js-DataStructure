@@ -142,7 +142,7 @@ const depthFirstSearchVisit = (vertex,colors,adjList,cb) => {
       cb && cb(vertex)
       let neighbors = adjList.get(vertex)
       neighbors.map(v => {
-          depthFirstSearchVisit(v,colors,adjList,cb)
+        depthFirstSearchVisit(v,colors,adjList,cb)
       })
       colors[vertex] = Colors.BLACK
   }

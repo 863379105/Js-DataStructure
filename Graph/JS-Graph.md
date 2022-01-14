@@ -196,3 +196,40 @@ const getShortestPath = (graph,v,w) => {
 ```
 
 #### 深度优先遍历
+
+深度优先搜索算法将会从第一个指定的顶点开始遍历图，沿着路径直到这条路径最后一个顶点被访问了，接着原路回退并探索下一条路径。换句话说，它是先深度后广度地访问顶点，如下图所示。
+
+![img](./5.png)
+
+深度优先搜索算法不需要一个源顶点。
+在深度优先搜索算法中，若图中顶点v未访问，则访问该顶点v。
+
+要访问顶点v，照如下步骤做：
+1. 标注v为被发现的（灰色）；
+2. 对于v的所有未访问（白色）的邻点w，访问顶点w；
+3. 标注v为已被探索的（黑色）。
+
+> 如你所见，深度优先搜索的步骤是递归的，这意味着深度优先搜索算法使用栈来存储函数调用（由递归调用所创建的栈）。
+
+算法实现如下:
+```js
+const depthFirstSearchVisit = (vertex,colors,adjList,cb) => {
+    if(colors[vertex] === Colors.WHITE) {
+        colors[vertex] = GREY
+        cb && cb(vertex)
+        let neighbors = adjList.get(vertex)
+        neighbors.map(v => {
+            depthFirstSearchVisit(v,colors,adjList,cb)
+        })
+        colors[vertex] = Colors.BLACK
+    }
+}
+
+const depthFirstSearch = (graph,cb) => {
+    const vertices = graph.vertices
+    const adjList = graph.adjList
+    const colors = initializeColor(vertices)
+
+    depthFirstSearchVisit(vertices[0],colors,adjList,cb)
+}
+```

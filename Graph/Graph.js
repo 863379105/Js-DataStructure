@@ -90,8 +90,8 @@ const breadthFirstSearch = (graph,startVertex,cb) => {
 }
 
 const BFS = (graph,startVertex) => {
-  let vertices = graph.vertices
-  let adjList = graph.adjList
+  let vertices = graph.getVertices()
+  let adjList = graph.getAdjList()
   let colors = initializeColor(vertices)
   let queue = new Queue()
   const distances = {} // 距离起点的距离
@@ -149,8 +149,8 @@ const depthFirstSearchVisit = (vertex,colors,adjList,cb) => {
 }
 
 const depthFirstSearch = (graph,cb) => {
-  const vertices = graph.vertices
-  const adjList = graph.adjList
+  const vertices = graph.getVertices()
+  const adjList = graph.getAdjList()
   const colors = initializeColor(vertices)
   
   depthFirstSearchVisit(vertices[0],colors,adjList,cb)

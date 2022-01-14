@@ -136,18 +136,6 @@ const shortestPath = (graph,v,w) => {
   return path
 }
 
-const depthFirstSearchVisit = (vertex,colors,adjList,cb) => {
-  if(colors[vertex] === Colors.WHITE) {
-      colors[vertex] = Colors.GREY
-      cb && cb(vertex)
-      let neighbors = adjList.get(vertex)
-      neighbors.map(v => {
-        depthFirstSearchVisit(v,colors,adjList,cb)
-      })
-      colors[vertex] = Colors.BLACK
-  }
-}
-
 const depthFirstSearch = (graph,cb) => {
   const vertices = graph.getVertices()
   const adjList = graph.getAdjList()
@@ -158,9 +146,64 @@ const depthFirstSearch = (graph,cb) => {
   })
 }
 
+const depthFirstSearchVisit = (vertex,colors,adjList,cb) => {
+  if(colors[vertex] === Colors.WHITE) {
+    colors[vertex] = Colors.GREY
+    cb && cb(vertex)
+    let neighbors = adjList.get(vertex)
+    neighbors.map(v => {
+      depthFirstSearchVisit(v,colors,adjList,cb)
+    })
+    colors[vertex] = Colors.BLACK
+  }
+}
+
+const DFS = graph => {
+  const vertices = graph.getVertices()
+  const adjList = graph.getAdjList()
+  const colors = initializeColor(vertices)
+  const d = {}
+  const f = {}
+  const p = {}
+  const time = {count: 0}
+  vertices.map(v => {
+    f[v] = 0
+    d[v] = 0
+    p[v] = null
+  })
+  vertices.map(vertex => {
+    if(colors[vertex] === Colors.WHITE) {
+      DFSVisit(vertex,colors,adjList,d,f,p,time)
+    }
+  })
+  return {
+    discovery: d,
+    finished: f,
+    predecessors: p
+  }
+}
+
+const DFSVisit = (vertex,colors,adjList,d,f,p,time) => {
+    colors[vertex] = Colors.GREY
+    d[vertex] = ++time.count
+    let neighbors = adjList.get(vertex)
+    // neighbors.map(v => {
+    //   p[v] = vertex
+    //   DFSVisit(vertex,colors,adjList,d,f,p,time)
+    // })
+    for(let i = 0; i < neighbors.length; i++) {
+      if(colors[neighbors[i]] === Colors.WHITE) {
+        p[neighbors[i]] = vertex
+        DFSVisit(neighbors[i],colors,adjList,d,f,p,time)
+      }
+    }
+    colors[vertex] = Colors.BLACK
+    f[vertex] = ++time.count
+}
+
 // ------------- TEST Sample
 const graph = new Graph()
-const vertices = ["A","B","C","D","E","F","G","H","I"]
+const vertices = ["A","B","C","D","E","F","G","H","I","j"]
 vertices.map(v => {
   graph.addVertex(v)
 })
@@ -183,8 +226,9 @@ graph.addEdge('E','I')
 // })
 // -------------------
 
-depthFirstSearch(graph,(v) => {
-  console.log(v+'->');
-})
+// depthFirstSearch(graph,(v) => {
+//   console.log(v+'->');
+// })
 
+console.log(DFS(graph))
 

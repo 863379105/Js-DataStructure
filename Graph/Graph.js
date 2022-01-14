@@ -153,7 +153,9 @@ const depthFirstSearch = (graph,cb) => {
   const adjList = graph.getAdjList()
   const colors = initializeColor(vertices)
   
-  depthFirstSearchVisit(vertices[0],colors,adjList,cb)
+  vertices.map(vertex => {
+    depthFirstSearchVisit(vertex,colors,adjList,cb)
+  })
 }
 
 // ------------- TEST Sample

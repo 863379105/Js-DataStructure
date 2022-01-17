@@ -15,11 +15,9 @@ class UnionSet {
   }
 }
 
-const unionset = new UnionSet(7)
-
-const edges = [[1,2],[1,3],[4,5],[4,6],[5,7]]
-
 // TEST SAMPLE =================>>>>>>>>>>>>
+// const unionset = new UnionSet(7)
+// const edges = [[1,2],[1,3],[4,5],[4,6],[5,7]]
 // edges.map(edge => {
 //   unionset.merge(edge[0],edge[1])
 // })
